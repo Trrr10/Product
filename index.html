@@ -767,7 +767,6 @@ nav.scrolled::before {
 .nt-val { font-size:11.5px;color:var(--gold);font-weight:400; }
 .nt-active-header { background:rgba(200,168,64,.08);padding:10px 24px;border-bottom:.5px solid var(--border-em); }
 .nt-active-header span { font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold); }
-.not-in-it { }
 .not-title { font-family:'Cinzel',serif;font-size:18px;font-weight:600;color:var(--cream);margin-bottom:24px;letter-spacing:.06em; }
 .not-item { display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:.5px solid var(--border); }
 .not-x { width:18px;height:18px;border-radius:50%;background:rgba(200,168,64,.1);border:.5px solid var(--gold-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
@@ -880,7 +879,6 @@ nav.scrolled::before {
 .form-field::placeholder { color:var(--dim); }
 .form-field:focus { border-color:var(--gold-deep); }
 .form-label { font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);display:block;margin-bottom:6px; }
-.form-group { }
 .form-submit {
   width:100%;
   background:var(--gold);
@@ -899,21 +897,103 @@ nav.scrolled::before {
 .form-submit:hover { background:var(--gold-hi); }
 
 /* ── FAQ ── */
-.faq { padding:120px 72px; }
-.faq-headline { font-family:'Cinzel',serif;font-size:clamp(24px,2.8vw,38px);font-weight:700;color:var(--cream);letter-spacing:.05em;margin-bottom:60px; }
-.faq-list { display:flex;flex-direction:column;gap:0; }
-.faq-item { border-bottom:.5px solid var(--border); }
-.faq-question {
-  padding:24px 0;
-  display:flex;justify-content:space-between;align-items:center;
-  cursor:none;
+.faq {
+  padding: 140px 0;
 }
-.faq-q-text { font-size:14px;color:var(--ivory);font-weight:400;line-height:1.4;max-width:80%; }
-.faq-icon { color:var(--gold);font-size:18px;transition:transform .3s;flex-shrink:0; }
-.faq-item.open .faq-icon { transform:rotate(45deg); }
-.faq-answer { max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s; }
-.faq-item.open .faq-answer { max-height:300px; }
-.faq-a-text { font-size:13px;color:var(--muted);line-height:1.9;padding-bottom:24px; }
+
+.faq-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 0 40px;
+}
+
+.faq-headline {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(32px, 3vw, 44px);
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: .05em;
+  margin-bottom: 80px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.faq-item {
+  border: 1px solid rgba(200,168,64,0.15);
+  border-radius: 12px;
+  padding: 0 24px;
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(6px);
+  transition: all 0.35s ease;
+}
+
+.faq-item:hover {
+  border: 1px solid rgba(200,168,64,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.faq-question {
+  padding: 26px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: none;
+}
+
+.faq-q-text {
+  font-size: 18px;
+  color: var(--ivory);
+  line-height: 1.5;
+  max-width: 85%;
+  transition: all 0.3s ease;
+}
+
+.faq-q-text:hover {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(200,168,64,0.3);
+}
+
+.faq-icon {
+  color: var(--gold);
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.faq-item.open .faq-icon {
+  transform: rotate(45deg) scale(1.2);
+  color: var(--gold-hi);
+  text-shadow: 0 0 10px rgba(200,168,64,0.5);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 220px;
+}
+
+.faq-a-text {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.9;
+  padding-bottom: 24px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+.faq-item.open .faq-a-text {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ── CLOSING ── */
 .closing {
@@ -1438,44 +1518,81 @@ footer::before {
 
 <!-- ── FAQ ── -->
 <section class="faq reveal">
-  <span class="section-tag">Questions we get asked</span>
-  <h2 class="faq-headline">Questions we get asked.</h2>
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">Is this safe for daily use?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">Yes. Every ingredient is at or below its safe daily intake level. Natural caffeine at 80mg is equivalent to one espresso. All vitamins are water-soluble and safe at these doses. Ashwagandha KSM-66® is studied for daily use over 8 weeks and beyond.</p></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">Can students drink this?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">Yes. The warning applies to children under 16 as standard caffeine advisory. University students and 16+ students are the core audience. The caffeine + L-Theanine combination is specifically what cognitive performance researchers recommend for sustained study sessions.</p></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">Why only 80mg caffeine when Red Bull also has 80mg?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">Red Bull uses synthetic caffeine isolate. We use cold-extracted natural caffeine. Natural caffeine absorbs 30–40% more slowly, producing sustained focus rather than a spike. Same number. Completely different experience.</p></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">What does it taste like?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">Blanc Lumière: light, clean, white peach with a barely-there floral finish. Or Noir: deep, bold, dark berry with a warm smoky finish. Soleil Rose: bright, sparkling, strawberry with a rose water linger. None of them taste like a standard energy drink. That is the point.</p></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">Is it suitable for vegetarians and vegans?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">Yes. All ingredients are plant-derived or synthesised without animal products. Fully vegetarian and vegan.</p></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">Will it affect my sleep?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">At 80mg with a 5–6 hour half-life, a can consumed before 4pm will have cleared your system by 10pm. Unlike 160mg synthetic caffeine drinks which genuinely impact sleep quality, ÉCLAT VITAL is formulated to perform during the day and not interfere with recovery at night.</p></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">Does it contain taurine?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">No. Taurine is absent by design. High-dose taurine in standard energy drinks is associated with cardiac stress in sensitive individuals. We chose better ingredients instead.</p></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question"><span class="faq-q-text">Why is there only 12 calories?</span><span class="faq-icon">+</span></div>
-      <div class="faq-answer"><p class="faq-a-text">Because there is zero added sugar and zero fat. The 12 calories come from 3g of carbohydrates used as the carrier base for the active ingredients. This is the lowest calorie count of any functional energy drink in this category.</p></div>
+  <div class="faq-container">
+
+    <span class="section-tag">Questions we get asked</span>
+    <h2 class="faq-headline">Questions we get asked.</h2>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="faq-q-text">Is this safe for daily use?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="faq-a-text">
+            Yes. Every ingredient is at or below its safe daily intake level. Natural caffeine at 80mg is equivalent to one espresso.
+            All vitamins are water-soluble and safe at these doses.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="faq-q-text">Can students drink this?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="faq-a-text">
+            Yes. The caffeine + L-Theanine combination is designed for sustained focus without anxiety,
+            making it suitable for long study sessions.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="faq-q-text">Is it suitable for vegetarians and vegans?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="faq-a-text">
+            Yes. All ingredients are plant-derived or synthesised without animal products.
+            Fully vegetarian and vegan.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="faq-q-text">Does it contain taurine?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="faq-a-text">
+            No. Taurine is absent by design. We focus on ingredients that support sustained performance
+            without unnecessary stimulation.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="faq-q-text">Why is there only 12 calories?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="faq-a-text">
+            Because there is zero added sugar and zero fat. The 12 calories come only from the carrier base
+            used for active ingredients.
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
-
 <div class="gold-rule"></div>
 
 <!-- ── CLOSING ── -->
@@ -1608,16 +1725,19 @@ window.addEventListener('scroll', () => {
     }
   });
 });
-
-// ── FAQ ACCORDION (Existing logic) ──
 document.querySelectorAll('.faq-question').forEach(q => {
   q.addEventListener('click', () => {
     const item = q.parentElement;
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
+
+    document.querySelectorAll('.faq-item').forEach(i => {
+      if (i !== item) i.classList.remove('open');
+    });
+
+    item.classList.toggle('open');
   });
 });
+// ── FAQ ACCORDION (Existing logic) ──
+
 </script>
 </body>
 </html>
