@@ -46,6 +46,13 @@ body::after {
   z-index: 9000;
 }
 
+.product-video {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 /* Custom cursor */
 /* The Core Point */
 .cursor { 
@@ -1214,15 +1221,9 @@ footer::before {
     <div class="flavour-card fc-blanc reveal">
       <span class="flavour-num">01</span>
       <div class="flavour-can">
-        <svg width="80" height="190" viewBox="0 0 200 460" fill="none">
-          <path d="M 24 52 Q 24 40 100 38 Q 176 40 176 52 L 176 412 Q 176 424 100 426 Q 24 424 24 412 Z" fill="#f8f4ee"/>
-          <text x="100" y="140" font-family="'Cinzel',serif" font-size="22" font-weight="700" fill="#3a1e08" text-anchor="middle" letter-spacing="3">ÉCLAT</text>
-          <text x="100" y="162" font-family="'Cinzel',serif" font-size="14" font-weight="600" fill="#3a1e08" text-anchor="middle" letter-spacing="3">VITAL</text>
-          <text x="100" y="180" font-family="'Cormorant Garamond',serif" font-size="9" font-style="italic" fill="#8a5828" text-anchor="middle">Blanc Lumière</text>
-          <ellipse cx="100" cy="268" rx="30" ry="48" fill="none" stroke="rgba(212,144,106,0.4)" stroke-width="0.6"/>
-          <circle cx="100" cy="268" r="3" fill="rgba(212,144,106,0.7)"/>
-          <text x="100" y="408" font-family="'Cormorant Garamond',serif" font-size="8.5" font-style="italic" fill="rgba(100,55,15,0.45)" text-anchor="middle">The energy behind every glow.</text>
-        </svg>
+        <video class="product-video" autoplay muted loop playsinline>
+    <source src="blanc.mp4" type="video/mp4">
+  </video>
       </div>
       <h3 class="flavour-name">BLANC LUMIÈRE</h3>
       <span class="flavour-meaning">White Light · blon loom-YAIR</span>
