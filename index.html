@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Éclat Vital — L'Oréal Professionnel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Barlow:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C8A840;
+  --gold-hi: #F0D878;
+  --gold-deep: #A88020;
+  --rose: #D4906A;
+  --rose-light: #F0C0A0;
+  --rose-deep: #B87060;
+  --black: #0E0E0E;
+  --slate: #1C1C1C;
+  --ivory: #F4F1EC;
+  --cream: #FEFCF8;
+  --muted: rgba(244,241,236,0.55);
+  --dim: rgba(244,241,236,0.28);
+  --border: rgba(200,168,64,0.15);
+  --border-em: rgba(200,168,64,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--ivory);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Noise overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 9000;
+}
+
+/* Custom cursor */
+/* The Core Point */
+.cursor { 
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #C8A840; /* Gold base */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background 0.3s, box-shadow 0.3s; 
+}
+
+/* The Outer Ring */
+.cursor-ring { 
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border: 0.5px solid rgba(200, 168, 64, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1); 
+}
+
+/* ── THE GLOW STATE ── */
+/* When hovering over links/buttons, we apply this class via JS */
+.cursor.glow {
+  width: 18px;
+  height: 18px;
+  background: #D4906A;
+  box-shadow:
+    0 0 60px 18px rgba(212, 80, 40, 0.95),
+    0 0 120px 36px rgba(255, 220, 80, 0.75),
+    0 0 90px 28px rgba(200, 168, 64, 0.85);
+}
+
+.cursor-ring.glow {
+  width: 90px;
+  height: 90px;
+  border-color: rgba(212, 80, 40, 0.85);
+  background: rgba(212, 80, 40, 0.18);
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold-deep); }
+
+/* ── UTILITY ── */
+.gold-rule {
+  height: .5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0;
+}
+.section-tag {
+  font-size: 20px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 20px;
+  font-weight: 500;
+  display: block;
+}
+.reveal { opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease; }
+.reveal.visible { opacity:1;transform:translateY(0); }
+
+/* ── NAVIGATION ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 80px;
+  background: rgba(22, 22, 22, 0.72);
+  border-bottom: 1px solid rgba(200, 168, 64, 0.18);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+nav.scrolled {
+  padding: 18px 80px;
+  background: rgba(80, 80, 80, 0.619);
+  border-bottom: 1px solid rgba(200, 168, 64, 0.18);
+  backdrop-filter: blur(32px);
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(32px);
+}
+
+nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 8, 8, 0.55) 0%,
+    rgba(8, 8, 8, 0.0) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+nav.scrolled::before {
+  display: none;
+}
+
+.nav-logo-group {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.nav-loreal {
+  font-family: 'Barlow', sans-serif;
+  font-size: 10px; /* Increased size */
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--rose);
+  opacity: 0.9;
+}
+
+.nav-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 24px; /* More prominent */
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  /* Subtle text-glow */
+  text-shadow: 0 0 15px rgba(200, 168, 64, 0.3);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.nav-links a {
+  font-size: 13px; /* Increased legibility */
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.4s ease;
+}
+
+/* Underline Hover Effect */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.4s ease;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.nav-links a:hover {
+  color: var(--gold-hi);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-cta {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  border: 1px solid var(--rose-deep);
+  padding: 12px 28px;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Button Glow & Fill Effect */
+.nav-cta:hover {
+  background: var(--rose-deep);
+  color: var(--cream);
+  box-shadow: 0 0 20px rgba(170, 44, 74, 0.4); /* Glow matching rose-deep */
+  transform: translateY(-2px);
+}
+
+.nav-cta:active {
+  transform: translateY(0);
+}
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 52% 48%;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 70% 50%, rgba(200,168,64,.07) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 40% at 30% 80%, rgba(212,144,106,.06) 0%, transparent 60%);
+}
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 140px 72px 100px;
+  position: relative;
+  z-index: 2;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 1s ease .3s forwards;
+}
+.hero-tagline-top {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px,2.5vw,48px);
+  font-style: italic;
+  font-weight: 200;
+  line-height: 1;
+  color: var(--cream);
+  margin-bottom: 6px;
+  opacity: 0;
+  animation: fadeUp 1s ease .5s forwards;
+}
+.hero-tagline-top em { color: var(--gold); font-style: normal; }
+.hero-name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(52px,6vw,88px);
+  font-weight: 800;
+  letter-spacing: .06em;
+  line-height: 1;
+  color: var(--gold);
+  margin-bottom: 8px;
+  opacity: 0;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  white-space: nowrap;
+  animation: fadeUp 1s ease .7s forwards;
+}
+.hero-sub {
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 1s ease .9s forwards;
+}
+.hero-rule-line {
+  width: 0;
+  height: .5px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-bottom: 36px;
+  opacity: 0;
+  font-family: 'Times New Roman', Times, serif;
+  animation: expandRule 1.2s ease 1.1s forwards;
+}
+.hero-body {
+
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 15px; 
+  line-height: 1.9;
+  font-weight: 300;
+  color: rgba(244, 241, 236, 0.75); 
+  max-width: 480px; 
+  margin-bottom: 56px;
+  letter-spacing: 0.02em; 
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  animation: fadeUp 1s ease 1.3s forwards;
+}
+
+/* Style the bold parts to feel like a highlight */
+.hero-body strong {
+  color: #F4F1EC;
+  font-weight: 500;
+  /* Subtle golden underline or glow for key ingredients */
+  text-shadow: 0 0 8px rgba(200, 168, 64, 0.2); 
+}
+.hero-body strong { color: var(--ivory); font-weight: 400; }
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.5s forwards;
+}
+.btn-primary {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  padding: 13px 28px;
+  text-decoration: none;
+  transition: background .3s, color .3s;
+}
+.btn-primary:hover { background: var(--gold-hi); }
+.btn-ghost {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: .5px solid var(--gold-deep);
+  padding: 13px 28px;
+  text-decoration: none;
+  transition: background .3s, color .3s;
+}
+.btn-ghost:hover { background: rgba(200,168,64,.08); }
+
+/* Hero stats */
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: .5px solid var(--border);
+  opacity: 0;
+  animation: fadeUp 1s ease 1.7s forwards;
+}
+
+.stat-num {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); line-height: 1.4; }
+
+@keyframes redGlowPulse {
+    0%, 100% { opacity: 0.5; }
+    50%       { opacity: 1;   }
+  }
+.cans-group {
+  position: relative;
+  opacity: 0;
+  animation: fadeIn 1.8s ease .8s forwards;
+}
+.can-glow-hero {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,168,64,.1) 0%, transparent 70%);
+  top:50%;left:50%;
+  transform: translate(-50%,-50%);
+  animation: glowPulse 5s ease-in-out infinite;
+}
+@keyframes glowPulse { 0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.15)} }
+.can-main { animation: floatMain 7s ease-in-out infinite; filter: drop-shadow(0 40px 60px rgba(0,0,0,.9)) drop-shadow(0 0 30px rgba(200,168,64,.08)); }
+.can-left { position:absolute;left:-80px;top:30px;animation:floatLeft 7s ease-in-out infinite .8s;opacity:.75;filter:drop-shadow(0 30px 50px rgba(0,0,0,.8)); }
+.can-right { position:absolute;right:-80px;top:30px;animation:floatRight 7s ease-in-out infinite 1.6s;opacity:.75;filter:drop-shadow(0 30px 50px rgba(0,0,0,.8)); }
+@keyframes floatMain { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes floatLeft { 0%,100%{transform:translateY(0) rotate(-8deg)} 50%{transform:translateY(-7px) rotate(-8deg)} }
+@keyframes floatRight { 0%,100%{transform:translateY(0) rotate(8deg)} 50%{transform:translateY(-8px) rotate(8deg)} }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: .5px solid var(--border);
+  border-bottom: .5px solid var(--border);
+  padding: 16px 0;
+  background: rgba(200,168,64,.03);
+}
+.marquee-track {
+  display: flex;
+  gap: 0;
+  animation: marquee 28s linear infinite;
+  white-space: nowrap;
+}
+.marquee-item {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  padding: 0 32px;
+  flex-shrink: 0;
+}
+.marquee-dot { color: var(--gold); }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── ORIGIN STORY ── */
+.origin {
+  padding: 160px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 120px;
+  align-items: start;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.origin-left { 
+  position: sticky; 
+  top: 140px; 
+}
+
+.origin-headline {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(36px, 3.2vw, 52px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 40px;
+  letter-spacing: .05em;
+}
+
+.origin-headline em { 
+  font-style: italic; 
+  color: var(--gold); 
+  font-family: 'Cormorant Garamond', serif; 
+  font-size: 1.15em; 
+}
+
+/* Pull quote */
+.origin-pull {
+  border-left: 2px solid var(--gold-deep);
+  padding: 20px 28px;
+  margin: 36px 0;
+}
+
+.origin-pull p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.7;
+}
+
+.origin-pull cite {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-top: 14px;
+}
+
+/* RIGHT SIDE TEXT */
+.origin-right {
+  display:flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 520px;  /* ✨ THIS FIXES ALIGNMENT */
+}
+.story-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(200,168,64,0.15);
+  padding: 28px 30px;
+  border-radius: 14px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition: all 0.4s ease;
+}
+
+/* TEXT */
+.story-card p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  line-height: 1.8;
+  color: rgba(244, 241, 236, 0.75);
+}
+
+/* HIGHLIGHT */
+.story-card strong {
+  color: #F4F1EC;
+  transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.story-card:hover {
+  transform: translateY(-6px);
+  border: 1px solid rgba(200,168,64,0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.story-card:hover strong {
+  color: var(--gold);
+  text-shadow: 0 0 12px rgba(200,168,64,0.4);
+}
+
+.origin-para {
+  font-size: 18px;   /* bigger = premium */
+  font-family: 'Cormorant Garamond', serif;
+  line-height: 1.9;
+  color: rgba(244, 241, 236, 0.75);
+  margin-bottom: 40px;
+}
+
+.origin-para strong { 
+  color: #F4F1EC; 
+  font-weight: 500; 
+}
+
+/* STATS */
+.origin-stats {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 60px;
+}
+
+.origin-stat {
+  background: var(--black);
+  padding: 32px 26px;
+}
+
+.origin-stat-num { 
+  font-family:'Cinzel',serif;
+  font-size:36px;
+  font-weight:700;
+  color:var(--gold);
+  display:block;
+  margin-bottom:10px;
+}
+
+.origin-stat-label { 
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--dim);
+  line-height:1.6;
+}
+.origin {
+  align-items: stretch; /* important */
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.origin-left,
+.origin-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ── PROBLEM ── */
+.problem {
+  padding: 100px 72px;
+  background: var(--slate);
+  position: relative;
+}
+.problem-headline {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(24px,2.8vw,38px);
+  font-weight: 600;
+  color: var(--cream);
+  max-width: 680px;
+  line-height: 1.25;
+  margin-bottom: 60px;
+  letter-spacing: .03em;
+}
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.problem-card {
+  background: var(--slate);
+  padding: 40px 28px;
+  transition: background .3s;
+  position: relative;
+}
+.problem-card:hover { background: #222; }
+.problem-card::before {
+  content: '';
+  position: absolute;
+  top: 0;left:0;right:0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.problem-card:hover::before { opacity: 1; }
+.problem-num { font-size:9px;letter-spacing:.2em;color:var(--gold-deep);display:block;margin-bottom:18px; }
+.problem-title { font-family:'Cinzel',serif;font-size:16px;font-weight:600;color:var(--cream);margin-bottom:14px;letter-spacing:.04em; }
+.problem-body { font-size:12.5px;color:var(--muted);line-height:1.8; }
+
+/* ── FLAVOURS ── */
+.flavours { padding: 140px 72px; }
+.flavours-header { margin-bottom: 80px; }
+.flavours-headline {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(28px,3vw,44px);
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 16px;
+  letter-spacing: .05em;
+}
+.flavours-sub { font-size:13.5px;color:var(--muted);max-width:560px;line-height:1.8; }
+.flavours-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border); }
+.flavour-card {
+  padding: 48px 36px;
+  position: relative;
+  overflow: hidden;
+  transition: background .4s;
+}
+.fc-blanc { background: rgba(254,252,248,.03); }
+.fc-noir { background: rgba(17,17,8,.4); }
+.fc-soleil { background: rgba(139,26,42,.08); }
+.flavour-card:hover { background: rgba(200,168,64,.05); }
+.flavour-num { font-size:9px;letter-spacing:.22em;color:var(--gold-deep);display:block;margin-bottom:24px; }
+.flavour-name {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 4px;
+  letter-spacing: .06em;
+}
+.flavour-meaning { font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:20px;display:block; }
+.flavour-taste { font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;display:block; }
+.flavour-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ivory);
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+.flavour-desc { font-size:12.5px;color:var(--muted);line-height:1.85;margin-bottom:32px; }
+.flavour-cta {
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);border-bottom:.5px solid var(--gold-deep);
+  padding-bottom:8px;display:inline-block;text-decoration:none;
+  transition:letter-spacing .3s,color .3s;
+}
+.flavour-cta:hover { letter-spacing:.28em;color:var(--gold-hi); }
+
+/* Can SVG in flavour card */
+.flavour-can { display:flex;justify-content:center;margin-bottom:32px; }
+
+/* ── FORMULA ── */
+.formula-section { padding:120px 72px;background:var(--slate); }
+.formula-head {
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding-bottom:24px;margin-bottom:0;
+  border-bottom:.5px solid rgba(200,168,64,.2);
+}
+.formula-title { font-family:'Cinzel',serif;font-size:36px;font-weight:700;color:var(--cream);letter-spacing:.06em; }
+.formula-subtitle { font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep); }
+.formula-claim {
+  padding: 20px 0;
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--rose);
+  border-bottom:.5px solid rgba(200,168,64,.12);
+  margin-bottom: 0;
+}
+.formula-grid { display:grid;grid-template-columns:repeat(4,1fr);background:var(--border);gap:1px; }
+.formula-item {
+  background:var(--slate);
+  padding:40px 28px;
+  transition:background .3s;
+}
+.formula-item:hover { background:#222; }
+.formula-num { font-size:9px;letter-spacing:.2em;color:var(--gold-deep);display:block;margin-bottom:18px; }
+.formula-name { font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:var(--cream);margin-bottom:6px;letter-spacing:.04em;line-height:1.25; }
+.formula-dose { font-size:9px;letter-spacing:.14em;color:var(--rose);display:block;margin-bottom:14px; }
+.formula-body { font-size:12px;color:var(--muted);line-height:1.8; }
+
+/* ── NUTRITION TABLE ── */
+.nutrition-section { padding:100px 72px; }
+.nutrition-headline { font-family:'Cinzel',serif;font-size:clamp(24px,2.8vw,38px);font-weight:700;color:var(--cream);letter-spacing:.05em;margin-bottom:16px; }
+.nutrition-sub { font-size:13px;color:var(--muted);margin-bottom:60px;max-width:520px;line-height:1.8; }
+.nutrition-inner { display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start; }
+.nutrition-table-wrap {
+  border:.5px solid var(--border-em);
+  padding: 0;
+  overflow: hidden;
+}
+.nt-header { background:var(--rose-deep);padding:16px 24px; }
+.nt-header h3 { font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--cream);letter-spacing:.12em;text-transform:uppercase; }
+.nt-row { display:flex;justify-content:space-between;align-items:center;padding:10px 24px;border-bottom:.5px solid var(--border); }
+.nt-row:last-child { border-bottom:none; }
+.nt-row.bold { background:rgba(200,168,64,.04); }
+.nt-label { font-size:11.5px;color:var(--ivory); }
+.nt-val { font-size:11.5px;color:var(--gold);font-weight:400; }
+.nt-active-header { background:rgba(200,168,64,.08);padding:10px 24px;border-bottom:.5px solid var(--border-em); }
+.nt-active-header span { font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold); }
+.not-in-it { }
+.not-title { font-family:'Cinzel',serif;font-size:18px;font-weight:600;color:var(--cream);margin-bottom:24px;letter-spacing:.06em; }
+.not-item { display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:.5px solid var(--border); }
+.not-x { width:18px;height:18px;border-radius:50%;background:rgba(200,168,64,.1);border:.5px solid var(--gold-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.not-x span { font-size:9px;color:var(--gold-deep);font-weight:500; }
+.not-label { font-size:12px;color:var(--muted); }
+
+/* ── WHO IT'S FOR ── */
+.for-whom { padding:140px 72px; }
+.fw-headline { font-family:'Cinzel',serif;font-size:clamp(28px,3vw,44px);font-weight:700;color:var(--cream);letter-spacing:.05em;margin-bottom:16px; }
+.fw-sub { font-size:13.5px;color:var(--muted);max-width:560px;line-height:1.8;margin-bottom:60px; }
+.fw-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border); }
+.fw-card {
+  background:var(--black);
+  padding:40px 32px;
+  position:relative;
+  overflow:hidden;
+  transition:background .4s;
+}
+.fw-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.fw-card:hover { background:var(--slate); }
+.fw-card:hover::before { opacity:1; }
+.fw-role { font-size:8.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep);display:block;margin-bottom:14px; }
+.fw-title { font-family:'Cinzel',serif;font-size:16px;font-weight:600;color:var(--cream);margin-bottom:8px;letter-spacing:.04em;line-height:1.25; }
+.fw-moment { font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--ivory);margin-bottom:14px;line-height:1.5; }
+.fw-need { font-size:12px;color:var(--muted);line-height:1.8; }
+
+/* ── MANIFESTO ── */
+.manifesto { padding:140px 72px;background:var(--slate);position:relative;overflow:hidden; }
+.manifesto-bg-text {
+  position:absolute;font-family:'Cinzel',serif;font-size:180px;font-weight:900;
+  color:rgba(200,168,64,.03);top:50%;left:50%;transform:translate(-50%,-50%);
+  letter-spacing:.12em;white-space:nowrap;pointer-events:none;user-select:none;
+}
+.manifesto-headline { font-family:'Cinzel',serif;font-size:clamp(24px,2.8vw,38px);font-weight:700;color:var(--cream);letter-spacing:.05em;margin-bottom:60px; }
+.manifesto-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:0;position:relative;z-index:1; }
+.manifesto-item {
+  padding:36px 40px;
+  border-bottom:.5px solid var(--border);
+  border-right:.5px solid var(--border);
+  transition:background .3s;
+}
+.manifesto-item:nth-child(even) { border-right:none; }
+.manifesto-item:nth-child(7),.manifesto-item:nth-child(8) { border-bottom:none; }
+.manifesto-item:hover { background:rgba(200,168,64,.03); }
+.manifesto-num { font-size:9px;letter-spacing:.2em;color:var(--gold-deep);display:block;margin-bottom:14px; }
+.manifesto-text { font-size:14px;color:var(--ivory);line-height:1.7; }
+.manifesto-text em { color:var(--gold);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.1em; }
+
+/* ── COMPARISON ── */
+.comparison { padding:120px 72px; }
+.comparison-headline { font-family:'Cinzel',serif;font-size:clamp(24px,2.8vw,38px);font-weight:700;color:var(--cream);letter-spacing:.05em;margin-bottom:60px;max-width:680px;line-height:1.25; }
+.comparison-table { width:100%;border-collapse:collapse; }
+.comparison-table th { padding:16px 20px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;border-bottom:.5px solid var(--border-em);text-align:left; }
+.comparison-table th:first-child { color:var(--dim);font-weight:300; }
+.comparison-table th:nth-child(2),.comparison-table th:nth-child(3) { color:var(--muted); }
+.comparison-table th:last-child { color:var(--gold); }
+.comparison-table td { padding:14px 20px;font-size:12.5px;border-bottom:.5px solid var(--border);vertical-align:middle; }
+.comparison-table td:first-child { color:var(--muted); }
+.comparison-table td:nth-child(2),.comparison-table td:nth-child(3) { color:rgba(244,241,236,.35); }
+.comparison-table td:last-child { color:var(--gold-hi); }
+.comparison-table tr:hover td { background:rgba(200,168,64,.03); }
+.check { color:var(--gold);font-size:14px; }
+.cross { color:rgba(244,241,236,.25); }
+
+/* ── RESERVE ── */
+.reserve {
+  padding:140px 72px;
+  background:var(--slate);
+  position:relative;
+  overflow:hidden;
+}
+.reserve-inner { display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start; }
+.reserve-headline {
+  font-family:'Cinzel',serif;
+  font-size:clamp(32px,4vw,54px);
+  font-weight:900;
+  color:var(--cream);
+  letter-spacing:.06em;
+  line-height:1.1;
+  margin-bottom:20px;
+}
+.reserve-headline em { color:var(--gold);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15em; }
+.reserve-sub { font-size:13.5px;color:var(--muted);line-height:1.85;margin-bottom:40px; }
+.reserve-pricing {
+  font-family:'Cinzel',serif;font-size:42px;font-weight:700;color:var(--gold);margin-bottom:6px;
+}
+.reserve-pricing-sub { font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:32px;display:block; }
+.trust-signals { display:flex;flex-direction:column;gap:10px; }
+.trust-item { display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--muted); }
+.trust-check { color:var(--gold);font-size:13px; }
+.reserve-form { display:flex;flex-direction:column;gap:14px; }
+.form-field {
+  width:100%;
+  background:rgba(200,168,64,.04);
+  border:.5px solid var(--border);
+  color:var(--ivory);
+  padding:14px 18px;
+  font-family:'Barlow',sans-serif;
+  font-size:13px;
+  font-weight:300;
+  letter-spacing:.04em;
+  outline:none;
+  transition:border-color .3s;
+  appearance:none;
+}
+.form-field::placeholder { color:var(--dim); }
+.form-field:focus { border-color:var(--gold-deep); }
+.form-label { font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);display:block;margin-bottom:6px; }
+.form-group { }
+.form-submit {
+  width:100%;
+  background:var(--gold);
+  color:var(--black);
+  border:none;
+  padding:16px 28px;
+  font-family:'Barlow',sans-serif;
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  font-weight:500;
+  cursor:none;
+  transition:background .3s;
+  margin-top:6px;
+}
+.form-submit:hover { background:var(--gold-hi); }
+
+/* ── FAQ ── */
+.faq { padding:120px 72px; }
+.faq-headline { font-family:'Cinzel',serif;font-size:clamp(24px,2.8vw,38px);font-weight:700;color:var(--cream);letter-spacing:.05em;margin-bottom:60px; }
+.faq-list { display:flex;flex-direction:column;gap:0; }
+.faq-item { border-bottom:.5px solid var(--border); }
+.faq-question {
+  padding:24px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  cursor:none;
+}
+.faq-q-text { font-size:14px;color:var(--ivory);font-weight:400;line-height:1.4;max-width:80%; }
+.faq-icon { color:var(--gold);font-size:18px;transition:transform .3s;flex-shrink:0; }
+.faq-item.open .faq-icon { transform:rotate(45deg); }
+.faq-answer { max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s; }
+.faq-item.open .faq-answer { max-height:300px; }
+.faq-a-text { font-size:13px;color:var(--muted);line-height:1.9;padding-bottom:24px; }
+
+/* ── CLOSING ── */
+.closing {
+  padding:160px 72px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.closing-bg {
+  position:absolute;font-family:'Cinzel',serif;font-size:200px;font-weight:900;
+  color:rgba(200,168,64,.025);top:50%;left:50%;
+  transform:translate(-50%,-50%);letter-spacing:.1em;
+  white-space:nowrap;pointer-events:none;user-select:none;
+}
+.closing-line { width:.5px;height:64px;background:linear-gradient(180deg,transparent,var(--gold-deep),transparent);margin:0 auto 52px; }
+.closing-quote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,3.5vw,48px);
+  font-style:italic;font-weight:300;
+  color:var(--cream);line-height:1.4;
+  max-width:780px;margin:0 auto 28px;
+  position:relative;z-index:1;
+}
+.closing-attr { font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-deep);position:relative;z-index:1; }
+.closing-final {
+  margin-top:48px;font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--rose);
+  position:relative;z-index:1;
+}
+
+/* ── FOOTER ── */
+footer {
+  background:var(--slate);
+  padding:72px 72px 0;
+  position:relative;
+}
+footer::before {
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:.5px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px; }
+.footer-brand-name { font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--gold);letter-spacing:.1em;display:block;margin-bottom:6px; }
+.footer-brand-sub { font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;display:block; }
+.footer-brand-body { font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:16px; }
+.footer-col-title { font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:20px;display:block; }
+.footer-col-links { display:flex;flex-direction:column;gap:10px; }
+.footer-col-links a { font-size:12px;color:var(--dim);text-decoration:none;transition:color .3s; }
+.footer-col-links a:hover { color:var(--gold); }
+.footer-legal {
+  border-top:.5px solid var(--border);
+  padding:20px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-legal p { font-size:9.5px;color:var(--dim);letter-spacing:.06em;line-height:1.6; }
+.footer-legal-links { display:flex;gap:24px; }
+.footer-legal-links a { font-size:9px;letter-spacing:.12em;color:var(--dim);text-decoration:none; }
+.footer-legal-links a:hover { color:var(--gold-deep); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes expandRule { from{opacity:0;width:0} to{opacity:1;width:60px} }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAVIGATION ── -->
+<nav id="nav">
+  <div class="nav-logo-group">
+    <span class="nav-loreal">L'Oréal Professionnel</span>
+    <span class="nav-brand">ÉCLAT VITAL</span>
+  </div>
+  <div class="nav-links">
+    <a href="#story">Our Story</a>
+    <a href="#formula">Formula</a>
+    <a href="#flavours">Flavours</a>
+    <a href="#reserve">Reserve</a>
+    <a href="#pro">Pro Access</a>
+    <a href="#reserve" class="nav-cta">Reserve Yours →</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <p class="hero-eyebrow">L'Oréal Professionnel Presents</p>
+    <p class="hero-tagline-top">The energy behind <em>every glow.</em></p>
+    <h1 class="hero-name">ÉCLAT VITAL</h1>
+   
+    <div class="hero-rule-line"></div>
+    <p class="hero-body">
+      <strong>Eight clinically dosed ingredients. Zero sugar. Zero synthetic stimulants. Zero compromise.</strong><br><br>
+      Built for professionals. Made for everyone who refuses to dim.
+    </p>
+    <div class="hero-btns">
+      <a href="#formula" class="btn-primary">Discover the Formula →</a>
+      <a href="#reserve" class="btn-ghost">Reserve Your Can</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">80mg</span>
+        <span class="stat-label">Natural<br>Caffeine</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">150%</span>
+        <span class="stat-label">Biotin<br>Daily Value</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">300mg</span>
+        <span class="stat-label">Ashwagandha<br>KSM-66®</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">0g</span>
+        <span class="stat-label">Added<br>Sugar</span>
+      </div>
+    </div>
+  </div>
+<div class="hero-right" style="position:relative; overflow:hidden;">
+
+  <!-- Pulsing red corner glows -->
+  <div style="
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    background:
+      radial-gradient(ellipse 40% 20% at 0% 0%, rgba(200,60,40,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 20% at 100% 0%, rgba(200,60,40,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 20% at 0% 100%, rgba(200,60,40,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 20% at 100% 100%, rgba(200,60,40,0.35) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 4;
+    animation: redGlowPulse 3s ease-in-out infinite;
+  "></div>
+
+  <!-- Hard border glow -->
+  <div style="
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    border: 1.5px solid rgba(212,80,60,0.55);
+    box-shadow:
+      inset 0 0 40px rgba(200,60,40,0.25),
+      inset 0 0 80px rgba(180,40,30,0.15),
+      0 0 60px rgba(200,60,40,0.2),
+      0 0 120px rgba(180,40,30,0.12);
+    pointer-events: none;
+    z-index: 4;
+    border-radius: 8px;
+  "></div>
+
+  <div class="can-glow-hero"></div>
+
+  <!-- Video -->
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    style="
+      width: 60%;
+      height: 60%;
+      object-fit: cover;
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      opacity: 0.92;
+      z-index: 1;
+      border-radius: 8px;
+    "
+  >
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+</div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Natural Caffeine 80mg</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Biotin B7 150% DV</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Ashwagandha KSM-66® 300mg</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">L-Theanine 100mg</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Vitamin B12</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Zero Sugar</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Recyclable Aluminium</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">L'Oréal Professionnel Paris</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Natural Caffeine 80mg</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Biotin B7 150% DV</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Ashwagandha KSM-66® 300mg</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">L-Theanine 100mg</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Vitamin B12</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Zero Sugar</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Recyclable Aluminium</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">L'Oréal Professionnel Paris</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- ── ORIGIN STORY ── -->
+<section class="origin" id="story">
+  <div class="origin-left reveal">
+    <span class="section-tag">Chapter 01 — Where it began</span>
+    <h2 class="origin-headline">Born in a laboratory.<br><em>Built for the salon floor.</em></h2>
+    <div class="origin-pull">
+    <p>"Behind every flawless result is someone pushing past exhaustion, choosing precision over fatigue."</p>
+      
+    </div>
+     <div class="origin-pull">
+    <p>"Transformation takes more than skill. It takes the energy to stay with it till the very last moment."</p>
+      
+    </div>
+    <div class="origin-stats">
+      <div class="origin-stat"><span class="origin-stat-num">18</span><span class="origin-stat-label">Months R&D<br>Duration</span></div>
+      <div class="origin-stat"><span class="origin-stat-num">200+</span><span class="origin-stat-label">Professionals<br>Consulted</span></div>
+      <div class="origin-stat"><span class="origin-stat-num">3</span><span class="origin-stat-label">Cities<br>Delhi · Pune · Mumbai</span></div>
+      <div class="origin-stat"><span class="origin-stat-num">115</span><span class="origin-stat-label">Years of<br>L'Oréal Science</span></div>
+    </div>
+  </div>
+ <div class="origin-right">
+
+  <div class="story-card reveal">
+  <p class="story-card reveal">
+    It starts with a quiet kind of courage.<br><br>
+    You decide to <strong>become the version of yourself you’ve imagined.</strong>
+  </p>
+
+  <p class="story-card reveal">
+    Then comes the wait.<br><br>
+    Hours pass. The excitement fades.<br>
+    <strong>The commitment remains, but the energy doesn’t.</strong>
+  </p>
+
+  <p class="story-card reveal">
+    Across the chair — hour three.<br><br>
+    Precision. Endurance. No room for error.<br>
+    <strong>Yet running on nothing but willpower.</strong>
+  </p>
+
+  <p class="story-card reveal">
+    So we asked a question.<br><br>
+    What if energy was designed for this exact moment?<br>
+    <strong>ÉCLAT VITAL</strong>
+  </p>
+
+  <div class="story-card reveal">
+    <p>
+      Not just to wake you up —<br><br>
+      but to carry you through transformation.<br>
+      <strong>The glow you waited for.</strong>
+    </p>
+  </div>
+
+</div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── THE PROBLEM ── -->
+<section class="problem reveal">
+  <span class="section-tag">Chapter 02 — What came before</span>
+  <h2 class="problem-headline">"The energy drink industry built products for your impulse. Not your body."</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <span class="problem-num">01</span>
+      <h3 class="problem-title">The Crash</h3>
+      <p class="problem-body">Most energy drinks use synthetic caffeine isolate. It peaks in 45 minutes and falls like a cliff. Not your body failing. The product failing your body.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-num">02</span>
+      <h3 class="problem-title">The Jitter</h3>
+      <p class="problem-body">High-dose synthetic stimulants trigger the same adrenaline response as physical threat. Shaking hands. Scattered focus. The opposite of precision performance.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-num">03</span>
+      <h3 class="problem-title">The Emptiness</h3>
+      <p class="problem-body">Standard energy drinks give you stimulation and nothing else. No vitamins. No adaptogens. No support for the biological systems that actually sustain you.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-num">04</span>
+      <h3 class="problem-title">The Dishonesty</h3>
+      <p class="problem-body">The market has spent decades telling you that performance looks like aggression. Real performance — the kind that lasts, that creates, that endures — looks like clarity.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── FLAVOURS ── -->
+<section class="flavours" id="flavours">
+  <div class="flavours-header reveal">
+    <span class="section-tag">Chapter 03 — Choose your moment</span>
+    <h2 class="flavours-headline">Three flavours. Three moments. One formula.</h2>
+    <p class="flavours-sub">Every can contains the identical active formula — eight ingredients, same clinical doses. The flavour is a personality choice. The performance is a guarantee.</p>
+  </div>
+  <div class="flavours-grid">
+    <div class="flavour-card fc-blanc reveal">
+      <span class="flavour-num">01</span>
+      <div class="flavour-can">
+        <svg width="80" height="190" viewBox="0 0 200 460" fill="none">
+          <path d="M 24 52 Q 24 40 100 38 Q 176 40 176 52 L 176 412 Q 176 424 100 426 Q 24 424 24 412 Z" fill="#f8f4ee"/>
+          <text x="100" y="140" font-family="'Cinzel',serif" font-size="22" font-weight="700" fill="#3a1e08" text-anchor="middle" letter-spacing="3">ÉCLAT</text>
+          <text x="100" y="162" font-family="'Cinzel',serif" font-size="14" font-weight="600" fill="#3a1e08" text-anchor="middle" letter-spacing="3">VITAL</text>
+          <text x="100" y="180" font-family="'Cormorant Garamond',serif" font-size="9" font-style="italic" fill="#8a5828" text-anchor="middle">Blanc Lumière</text>
+          <ellipse cx="100" cy="268" rx="30" ry="48" fill="none" stroke="rgba(212,144,106,0.4)" stroke-width="0.6"/>
+          <circle cx="100" cy="268" r="3" fill="rgba(212,144,106,0.7)"/>
+          <text x="100" y="408" font-family="'Cormorant Garamond',serif" font-size="8.5" font-style="italic" fill="rgba(100,55,15,0.45)" text-anchor="middle">The energy behind every glow.</text>
+        </svg>
+      </div>
+      <h3 class="flavour-name">BLANC LUMIÈRE</h3>
+      <span class="flavour-meaning">White Light · blon loom-YAIR</span>
+      <span class="flavour-taste">White Peach · Elderflower · Vanilla</span>
+      <p class="flavour-tagline">"The calm before your finest hour."</p>
+      <p class="flavour-desc">Light and clean — white peach immediate and fresh, elderflower adding a barely-there floral elegance, vanilla rounding the finish. It does not taste like an energy drink. It tastes like the beginning of your best day.</p>
+      <a href="#reserve" class="flavour-cta">Reserve Blanc Lumière →</a>
+    </div>
+    <div class="flavour-card fc-noir reveal">
+      <span class="flavour-num">02</span>
+      <div class="flavour-can">
+        <svg width="80" height="190" viewBox="0 0 200 460" fill="none">
+          <path d="M 24 52 Q 24 40 100 38 Q 176 40 176 52 L 176 412 Q 176 424 100 426 Q 24 424 24 412 Z" fill="#141408"/>
+          <text x="100" y="140" font-family="'Cinzel',serif" font-size="22" font-weight="700" fill="#C8A840" text-anchor="middle" letter-spacing="3">ÉCLAT</text>
+          <text x="100" y="162" font-family="'Cinzel',serif" font-size="14" font-weight="600" fill="#C8A840" text-anchor="middle" letter-spacing="3">VITAL</text>
+          <text x="100" y="180" font-family="'Cormorant Garamond',serif" font-size="9" font-style="italic" fill="rgba(200,168,64,0.6)" text-anchor="middle">Or Noir</text>
+          <ellipse cx="100" cy="268" rx="30" ry="48" fill="none" stroke="rgba(200,168,64,0.3)" stroke-width="0.6"/>
+          <circle cx="100" cy="268" r="3" fill="rgba(200,168,64,0.7)"/>
+          <text x="100" y="408" font-family="'Cormorant Garamond',serif" font-size="8.5" font-style="italic" fill="rgba(200,168,64,0.35)" text-anchor="middle">The energy behind every glow.</text>
+        </svg>
+      </div>
+      <h3 class="flavour-name">OR NOIR</h3>
+      <span class="flavour-meaning">Black Gold · or NWAHR</span>
+      <span class="flavour-taste">Dark Berry · Rose · Smoked Wood</span>
+      <p class="flavour-tagline">"For the ones who don't stop."</p>
+      <p class="flavour-desc">Dark berry immediate and bold, rose adding unexpected elegance, smoked wood finishing with a warmth that feels earned. There is no other energy drink that tastes like this. That is entirely the point.</p>
+      <a href="#reserve" class="flavour-cta">Reserve Or Noir →</a>
+    </div>
+    <div class="flavour-card fc-soleil reveal">
+      <span class="flavour-num">03</span>
+      <div class="flavour-can">
+        <svg width="80" height="190" viewBox="0 0 200 460" fill="none">
+          <path d="M 24 52 Q 24 40 100 38 Q 176 40 176 52 L 176 412 Q 176 424 100 426 Q 24 424 24 412 Z" fill="#8B1A2A"/>
+          <text x="100" y="140" font-family="'Cinzel',serif" font-size="22" font-weight="700" fill="#F0C0A0" text-anchor="middle" letter-spacing="3">ÉCLAT</text>
+          <text x="100" y="162" font-family="'Cinzel',serif" font-size="14" font-weight="600" fill="#F0C0A0" text-anchor="middle" letter-spacing="3">VITAL</text>
+          <text x="100" y="180" font-family="'Cormorant Garamond',serif" font-size="9" font-style="italic" fill="rgba(240,192,160,0.6)" text-anchor="middle">Soleil Rose</text>
+          <ellipse cx="100" cy="268" rx="30" ry="48" fill="none" stroke="rgba(240,192,160,0.35)" stroke-width="0.6"/>
+          <circle cx="100" cy="268" r="3" fill="rgba(240,192,160,0.7)"/>
+          <text x="100" y="408" font-family="'Cormorant Garamond',serif" font-size="8.5" font-style="italic" fill="rgba(240,192,160,0.35)" text-anchor="middle">The energy behind every glow.</text>
+        </svg>
+      </div>
+      <h3 class="flavour-name">SOLEIL ROSE</h3>
+      <span class="flavour-meaning">Pink Sun · so-LAY ROHZ</span>
+      <span class="flavour-taste">Wild Strawberry · Lychee · Rose Water</span>
+      <p class="flavour-tagline">"Because you're worth the science."</p>
+      <p class="flavour-desc">Wild strawberry bright and joyful, lychee adding an exotic sweetness, rose water finishing with an elegance so unexpected it makes people pause. The flavour that photographs beautifully. The one that gets shared.</p>
+      <a href="#reserve" class="flavour-cta">Reserve Soleil Rose →</a>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── FORMULA ── -->
+<section class="formula-section" id="formula">
+  <div class="formula-head reveal">
+    <h2 class="formula-title">The Formula</h2>
+    <span class="formula-subtitle">Eight ingredients. Zero compromise.</span>
+  </div>
+  <div class="formula-claim reveal">NEW PROFESSIONNEL POWER: VITALIZE &amp; PREP · Every ingredient disclosed · Every dose justified</div>
+  <div class="formula-grid">
+    <div class="formula-item reveal"><span class="formula-num">01</span><h3 class="formula-name">Natural Caffeine</h3><span class="formula-dose">80mg · Green Coffee Bean</span><p class="formula-body">Smooth onset focus in 20–40 minutes. No jitter. No crash. Sustained for 5–6 hours. Cold extraction preserves chlorogenic acids that slow absorption — behaves nothing like synthetic caffeine.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">02</span><h3 class="formula-name">Biotin Complex B7</h3><span class="formula-dose">7.5mcg · 150% Daily Value</span><p class="formula-body">Keratin synthesis support — the structural protein of hair, skin, and nails. Sustained stress depletes biotin faster than a standard diet replaces it. Non-negotiable for this brand.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">03</span><h3 class="formula-name">Ashwagandha KSM-66®</h3><span class="formula-dose">300mg · Withanolide ≥5%</span><p class="formula-body">Cortisol modulation. Stress adaptation. The world's most clinically studied ashwagandha extract. Modulates your hormonal response so stress becomes information you can use.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">04</span><h3 class="formula-name">L-Theanine</h3><span class="formula-dose">100mg · Green Tea Leaf</span><p class="formula-body">Promotes alpha brain wave activity — the state of relaxed, sustained concentration. Pairs with caffeine for "alert calm." The most studied cognitive performance stack in nutritional science.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">05</span><h3 class="formula-name">Vitamin B12</h3><span class="formula-dose">2.4mcg · 100% Daily Value</span><p class="formula-body">Neural energy metabolism. Nerve health. Brain function. Deficiency produces fatigue, brain fog, and reduced cognitive performance — the exact symptoms ÉCLAT VITAL is built to address.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">06</span><h3 class="formula-name">Vitamin B6</h3><span class="formula-dose">1.7mg · 100% Daily Value</span><p class="formula-body">Cognitive function support. Energy release from food. Works synergistically with B12 in the neural energy pathway — the biological infrastructure of sustained focus.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">07</span><h3 class="formula-name">Pantothenic Acid B5</h3><span class="formula-dose">5mg · 100% Daily Value</span><p class="formula-body">Converts food into usable energy. Supports adrenal function — directly relevant to sustained performance pressure. Works alongside ashwagandha at a different biological layer.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">08</span><h3 class="formula-name">Magnesium Citrate</h3><span class="formula-dose">56mg · 15% Daily Value</span><p class="formula-body">Highest bioavailability form. Muscle and nerve function. Cortisol regulation. Studies show 60–70% of adults are chronically deficient — manifesting as anxiety, poor sleep, and fatigue.</p></div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── NUTRITION TABLE ── -->
+<section class="nutrition-section reveal">
+  <span class="section-tag">Complete nutritional transparency</span>
+  <h2 class="nutrition-headline">Nothing hidden. Everything justified.</h2>
+  <p class="nutrition-sub">No proprietary blends. No hidden dosages. Every active compound disclosed, dosed at clinically studied levels, and sourced with full traceability.</p>
+  <div class="nutrition-inner">
+    <div class="nutrition-table-wrap">
+      <div class="nt-header"><h3>Nutrition Facts — Per 330ml Can</h3></div>
+      <div class="nt-row bold"><span class="nt-label">Calories</span><span class="nt-val">12 kcal</span></div>
+      <div class="nt-row"><span class="nt-label">Total Carbohydrates</span><span class="nt-val">3g</span></div>
+      <div class="nt-row"><span class="nt-label">&nbsp;&nbsp;of which Sugars</span><span class="nt-val">0g ✓</span></div>
+      <div class="nt-row"><span class="nt-label">&nbsp;&nbsp;of which Added Sugars</span><span class="nt-val">0g ✓</span></div>
+      <div class="nt-row"><span class="nt-label">Protein</span><span class="nt-val">0g</span></div>
+      <div class="nt-row"><span class="nt-label">Total Fat</span><span class="nt-val">0g</span></div>
+      <div class="nt-row"><span class="nt-label">Sodium</span><span class="nt-val">80mg</span></div>
+      <div class="nt-active-header"><span>Active Complex</span></div>
+      <div class="nt-row"><span class="nt-label">Natural Caffeine (Green Coffee)</span><span class="nt-val">80mg</span></div>
+      <div class="nt-row"><span class="nt-label">Biotin B7</span><span class="nt-val">7.5mcg · 150% DV</span></div>
+      <div class="nt-row"><span class="nt-label">Ashwagandha KSM-66®</span><span class="nt-val">300mg</span></div>
+      <div class="nt-row"><span class="nt-label">L-Theanine</span><span class="nt-val">100mg</span></div>
+      <div class="nt-row"><span class="nt-label">Vitamin B12</span><span class="nt-val">2.4mcg · 100% DV</span></div>
+      <div class="nt-row"><span class="nt-label">Vitamin B6</span><span class="nt-val">1.7mg · 100% DV</span></div>
+      <div class="nt-row"><span class="nt-label">Pantothenic Acid B5</span><span class="nt-val">5mg · 100% DV</span></div>
+      <div class="nt-row"><span class="nt-label">Magnesium Citrate</span><span class="nt-val">56mg · 15% DV</span></div>
+    </div>
+    <div class="not-in-it">
+      <h3 class="not-title">What is NOT in it.</h3>
+      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No added sugar</span></div>
+      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No synthetic caffeine</span></div>
+      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No artificial colours</span></div>
+      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No artificial flavours</span></div>
+      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No high-dose niacin (B3)</span></div>
+      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No taurine</span></div>
+      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No proprietary blend hiding</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── WHO IT'S FOR ── -->
+<section class="for-whom">
+  <span class="section-tag">Chapter 05 — Not a demographic. A moment.</span>
+  <h2 class="fw-headline reveal">Any day where ordinary is not enough.</h2>
+  <p class="fw-sub reveal">Any person. Any pressure. Any moment that demands more than you have left on your own.</p>
+  <div class="fw-grid">
+    <div class="fw-card reveal"><span class="fw-role">The Professional</span><h3 class="fw-title">Certified stylists & salon professionals</h3><p class="fw-moment">"Ten hours behind the chair. Full Saturday booking. Precision on demand."</p><p class="fw-need">Sustained focus. Biotin for chemical exposure. Cortisol support for creative performance on command.</p></div>
+    <div class="fw-card reveal"><span class="fw-role">The Student</span><h3 class="fw-title">16+ working on themselves every day</h3><p class="fw-moment">"Exam season. Five papers. Four days. The temptation to overcaffeinate."</p><p class="fw-need">Calm focus without anxiety. Clean caffeine that does not wreck sleep. Zero sugar crash mid-paper.</p></div>
+    <div class="fw-card reveal"><span class="fw-role">The Founder</span><h3 class="fw-title">Entrepreneurs & builders</h3><p class="fw-moment">"Launch week. Three time zones. Decisions that cannot be reversed."</p><p class="fw-need">6–8 hours of sustained cognitive performance. No mid-afternoon collapse that makes the last third of the day useless.</p></div>
+    <div class="fw-card reveal"><span class="fw-role">The Creative</span><h3 class="fw-title">Designers, photographers, artists</h3><p class="fw-moment">"Shoot day. Client pitch. Deadline that cannot move."</p><p class="fw-need">The biological conditions for flow — calm, sustained alertness, low cortisol. Not caffeine overload.</p></div>
+    <div class="fw-card reveal"><span class="fw-role">The Athlete</span><h3 class="fw-title">Gym-goers & sport enthusiasts</h3><p class="fw-moment">"Morning training followed by a full workday. The body that needs to perform twice."</p><p class="fw-need">Natural caffeine for activation. Biotin for structural support. Magnesium for recovery.</p></div>
+    <div class="fw-card reveal"><span class="fw-role">Everyone</span><h3 class="fw-title">Anyone having a hard week</h3><p class="fw-moment">"The to-do list that doesn't shorten. Where being tired is not an option but is happening anyway."</p><p class="fw-need">A drink that treats the body as an intelligent system deserving proper support — not a machine to overclock.</p></div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── MANIFESTO ── -->
+<section class="manifesto">
+  <div class="manifesto-bg-text">ÉCLAT</div>
+  <span class="section-tag">What we believe</span>
+  <h2 class="manifesto-headline reveal">Eight beliefs that built this.</h2>
+  <div class="manifesto-grid">
+    <div class="manifesto-item reveal"><span class="manifesto-num">01</span><p class="manifesto-text">Your body is not an obstacle to your ambition.<br><em>It is the vehicle for it.</em></p></div>
+    <div class="manifesto-item reveal"><span class="manifesto-num">02</span><p class="manifesto-text">Real energy is quiet, steady,<br><em>and still there at hour nine.</em></p></div>
+    <div class="manifesto-item reveal"><span class="manifesto-num">03</span><p class="manifesto-text">The most caring thing you can do for someone is understand their biology deeply enough <em>to actually help it.</em></p></div>
+    <div class="manifesto-item reveal"><span class="manifesto-num">04</span><p class="manifesto-text">A crash is not an inevitability.<br><em>It is a design flaw. We designed around it.</em></p></div>
+    <div class="manifesto-item reveal"><span class="manifesto-num">05</span><p class="manifesto-text">Transparency is not a feature.<br><em>Every ingredient disclosed. Every dosage justified.</em></p></div>
+    <div class="manifesto-item reveal"><span class="manifesto-num">06</span><p class="manifesto-text">Beauty and performance are the same thing —<br><em>the expression of a body that is genuinely well.</em></p></div>
+    <div class="manifesto-item reveal"><span class="manifesto-num">07</span><p class="manifesto-text">Thinking is an athletic event.<br><em>We formulate accordingly.</em></p></div>
+    <div class="manifesto-item reveal"><span class="manifesto-num">08</span><p class="manifesto-text">You are worth the science.<br><em>You always were.</em></p></div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── COMPARISON ── -->
+<section class="comparison reveal">
+  <span class="section-tag">Why ÉCLAT VITAL</span>
+  <h2 class="comparison-headline">"The difference is not marketing. It is the formula."</h2>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Red Bull</th>
+        <th>Monster</th>
+        <th>ÉCLAT VITAL ✓</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Sugar</td><td>27g</td><td>54g</td><td>0g ✓</td></tr>
+      <tr><td>Synthetic caffeine</td><td>Yes</td><td>Yes</td><td>No ✓</td></tr>
+      <tr><td>Caffeine dose</td><td>80mg</td><td>160mg</td><td>80mg ✓</td></tr>
+      <tr><td>Natural caffeine source</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
+      <tr><td>Artificial colours</td><td>Yes</td><td>Yes</td><td>No ✓</td></tr>
+      <tr><td>Adaptogens</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
+      <tr><td>Biotin</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
+      <tr><td>Full B-vitamin complex</td><td>Partial</td><td>Partial</td><td>Full ✓</td></tr>
+      <tr><td>Magnesium</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
+      <tr><td>Calories</td><td>110 kcal</td><td>210 kcal</td><td>12 kcal ✓</td></tr>
+      <tr><td>L'Oréal Research</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── RESERVE ── -->
+<section class="reserve" id="reserve">
+  <div class="reserve-inner">
+    <div class="reveal">
+      <span class="section-tag">Limited access — Reserve now</span>
+      <h2 class="reserve-headline">You were always<br><em>this bright.</em></h2>
+      <p class="reserve-sub">ÉCLAT VITAL launches in India with intentionally limited stock. Reserve your introduction pack — three cans, one of each flavour — and be among the first to experience the energy behind every glow.</p>
+      <div class="reserve-pricing">₹750</div>
+      <span class="reserve-pricing-sub">Introduction 3-pack · ₹250 per can · All three flavours<br>Free delivery · Ships within 7 working days · No payment to reserve</span>
+      <div class="trust-signals">
+        <div class="trust-item"><span class="trust-check">✓</span>L'Oréal Professionnel backed</div>
+        <div class="trust-item"><span class="trust-check">✓</span>FSSAI Licensed — India</div>
+        <div class="trust-item"><span class="trust-check">✓</span>Zero sugar verified</div>
+        <div class="trust-item"><span class="trust-check">✓</span>Recyclable aluminium ♻</div>
+        <div class="trust-item"><span class="trust-check">✓</span>Vegetarian &amp; Vegan</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="reserve-form" onsubmit="return false;">
+        <div class="form-group"><label class="form-label">First name</label><input class="form-field" type="text" placeholder="Your name"></div>
+        <div class="form-group"><label class="form-label">Email address</label><input class="form-field" type="email" placeholder="your@email.com"></div>
+        <div class="form-group"><label class="form-label">City</label>
+          <select class="form-field">
+            <option value="">Select your city</option>
+            <option>Mumbai</option><option>Delhi</option><option>Bangalore</option>
+            <option>Chennai</option><option>Hyderabad</option><option>Pune</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Preferred flavour</label>
+          <select class="form-field">
+            <option value="">Choose your flavour</option>
+            <option>Blanc Lumière</option><option>Or Noir</option>
+            <option>Soleil Rose</option><option>All Three (Introduction Pack)</option>
+          </select>
+        </div>
+        <button class="form-submit" type="submit">Reserve My Pack →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── FAQ ── -->
+<section class="faq reveal">
+  <span class="section-tag">Questions we get asked</span>
+  <h2 class="faq-headline">Questions we get asked.</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">Is this safe for daily use?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">Yes. Every ingredient is at or below its safe daily intake level. Natural caffeine at 80mg is equivalent to one espresso. All vitamins are water-soluble and safe at these doses. Ashwagandha KSM-66® is studied for daily use over 8 weeks and beyond.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">Can students drink this?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">Yes. The warning applies to children under 16 as standard caffeine advisory. University students and 16+ students are the core audience. The caffeine + L-Theanine combination is specifically what cognitive performance researchers recommend for sustained study sessions.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">Why only 80mg caffeine when Red Bull also has 80mg?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">Red Bull uses synthetic caffeine isolate. We use cold-extracted natural caffeine. Natural caffeine absorbs 30–40% more slowly, producing sustained focus rather than a spike. Same number. Completely different experience.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">What does it taste like?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">Blanc Lumière: light, clean, white peach with a barely-there floral finish. Or Noir: deep, bold, dark berry with a warm smoky finish. Soleil Rose: bright, sparkling, strawberry with a rose water linger. None of them taste like a standard energy drink. That is the point.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">Is it suitable for vegetarians and vegans?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">Yes. All ingredients are plant-derived or synthesised without animal products. Fully vegetarian and vegan.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">Will it affect my sleep?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">At 80mg with a 5–6 hour half-life, a can consumed before 4pm will have cleared your system by 10pm. Unlike 160mg synthetic caffeine drinks which genuinely impact sleep quality, ÉCLAT VITAL is formulated to perform during the day and not interfere with recovery at night.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">Does it contain taurine?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">No. Taurine is absent by design. High-dose taurine in standard energy drinks is associated with cardiac stress in sensitive individuals. We chose better ingredients instead.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question"><span class="faq-q-text">Why is there only 12 calories?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p class="faq-a-text">Because there is zero added sugar and zero fat. The 12 calories come from 3g of carbohydrates used as the carrier base for the active ingredients. This is the lowest calorie count of any functional energy drink in this category.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ── CLOSING ── -->
+<section class="closing">
+  <div class="closing-bg">ÉCLAT VITAL</div>
+  <div class="closing-line"></div>
+  <p class="closing-quote reveal">"Not to hype you up. Not to rush the process. Just to carry you — all the way to the moment that matters."</p>
+  <p class="closing-attr reveal">Éclat Vital by L'Oréal Professionnel · Paris</p>
+  <p class="closing-final reveal">Fuel Your Creativity. Unleash Your Energy.</p>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-name">ÉCLAT VITAL</span>
+      <span class="footer-brand-sub">by L'Oréal Professionnel</span>
+      <p class="footer-brand-body">Born in a laboratory in Clichy, France. Brought to India by L'Oréal Professionnel's Advanced Research Division. 18 months. 200+ professionals. The energy behind every glow.</p>
+      <p style="font-size:10px;color:var(--dim);letter-spacing:.1em;">eclatvital.lorealprofessionnel.com<br>@eclatvital · #EclatVital</p>
+    </div>
+    <div>
+      <span class="footer-col-title">Product</span>
+      <div class="footer-col-links">
+        <a href="#">Formula Overview</a>
+        <a href="#">Ingredient Sourcing</a>
+        <a href="#">Nutrition Facts</a>
+        <a href="#">Sustainability</a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Access</span>
+      <div class="footer-col-links">
+        <a href="#reserve">Consumer Reserve</a>
+        <a href="#">Pro Portal Login</a>
+        <a href="#">Salon Partners</a>
+        <a href="#">Wholesale Enquiry</a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Company</span>
+      <div class="footer-col-links">
+        <a href="#">About L'Oréal Professionnel</a>
+        <a href="#">Press & Media</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Stockists</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <p>© 2026 L'Oréal Professionnel. All rights reserved. ÉCLAT VITAL is a registered trademark of L'Oréal Professionnel.<br>FSSAI License: 10019022002122 · Manufactured by: L'Oréal India Pvt. Ltd., Mumbai, Maharashtra.<br>Contains caffeine. Not recommended for children under 16 or pregnant women.</p>
+    <div class="footer-legal-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR CORE LOGIC ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0, my=0, rx=0, ry=0;
+
+// Track Mouse position
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+});
+
+// Smooth Lerp Animation (Existing logic)
+(function animC(){
+  rx += (mx - rx) * 0.1;
+  ry += (my - ry) * 0.1;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animC);
+})();
+
+// ── INTERACTIVE HOVERS & GLOW ──
+// Targeting all interactive elements you specified
+document.querySelectorAll('a, button, .faq-question, .flavour-card, .fw-card, .problem-card, .formula-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    // Existing Size Changes
+    cursor.style.width = '12px';
+    cursor.style.height = '12px';
+    ring.style.width = '44px';
+    ring.style.height = '44px';
+    
+    // Toggle the Glow Classes
+    cursor.classList.add('glow');
+    ring.classList.add('glow');
+  });
+
+  el.addEventListener('mouseleave', () => {
+    // Existing Size Changes
+    cursor.style.width = '6px';
+    cursor.style.height = '6px';
+    ring.style.width = '28px';
+    ring.style.height = '28px';
+    
+    // Remove the Glow Classes
+    cursor.classList.remove('glow');
+    ring.classList.remove('glow');
+  });
+});
+
+// ── NAVIGATION SCROLL (Existing logic) ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+// ── SCROLL REVEAL (Existing logic) ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+const reveals = document.querySelectorAll('.reveal');
+
+window.addEventListener('scroll', () => {
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      el.classList.add('active');
+    }
+  });
+});
+
+// ── FAQ ACCORDION (Existing logic) ──
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
