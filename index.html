@@ -624,7 +624,188 @@ nav.scrolled::before {
   justify-content: space-between;
 }
 
-/* ── PROBLEM ── */
+
+/* ── FEATURES ── */
+
+/* ── FEATURES ── */
+.features-section {
+  padding: 140px 72px;
+  background: var(--black);
+}
+
+.features-header {
+  margin-bottom: 80px;
+}
+
+.features-headline {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: clamp(60px, 3.5vw, 52px);
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: .05em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.features-headline em {
+  font-style: italic;
+  color: var(--gold);
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.1em;
+}
+
+.features-sub {
+  font-size: 18px;
+  font-family: 'Times New Roman', Times, serif;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.8;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(200,168,64,0.1);
+}
+
+.feature-card {
+  background: var(--black);
+  padding: 44px 36px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s ease;
+  cursor: pointer;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.feature-card:hover { background: var(--slate); }
+.feature-card:hover::before { opacity: 1; }
+.feature-card.active { background: var(--slate); }
+.feature-card.active::before { opacity: 1; }
+
+.feature-icon-wrap {
+  margin-bottom: 20px;
+  opacity: 0.8;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.feature-card:hover .feature-icon-wrap {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.feature-num {
+  font-size: 34px;
+  letter-spacing: .22em;
+  color: var(--gold-deep);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.feature-title {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: .06em;
+  margin-bottom: 12px;
+  line-height: 1.2;
+  transition: color 0.3s;
+}
+
+.feature-card:hover .feature-title { color: var(--gold); }
+.feature-card.active .feature-title { color: var(--gold); }
+
+.feature-short {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-weight: 800;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.feature-expand {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
+}
+
+.feature-card.active .feature-expand {
+  max-height: 300px;
+  opacity: 1;
+}
+
+.feature-long {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.85;
+  margin-bottom: 24px;
+  padding-top: 16px;
+  border-top: 0.5px solid rgba(200,168,64,0.12);
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.feature-stat-row {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border: 0.5px solid rgba(200,168,64,0.12);
+}
+
+.feature-stat {
+  flex: 1;
+  padding: 12px 8px;
+  text-align: center;
+  border-right: 0.5px solid rgba(200,168,64,0.12);
+}
+
+.feature-stat:last-child { border-right: none; }
+
+.fs-num {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.fs-label {
+  font-size: 8px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+.feature-cta {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  transition: color 0.3s, letter-spacing 0.3s;
+  display: inline-block;
+}
+
+.feature-card:hover .feature-cta { color: var(--gold); letter-spacing: .24em; }
+.feature-card.active .feature-cta { color: var(--rose); letter-spacing: .14em; }
+.feature-card.active .feature-cta::before { content: 'Close '; }
+
+/* ── PROBLEM  ── */
+
 .problem {
   padding: 100px 72px;
   background: var(--slate);
@@ -1260,31 +1441,156 @@ footer::before {
 
 <div class="gold-rule"></div>
 
-<!-- ── THE PROBLEM ── -->
-<section class="problem reveal">
-  <span class="section-tag">Chapter 02 — What came before</span>
-  <h2 class="problem-headline">"The energy drink industry built products for your impulse. Not your body."</h2>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <span class="problem-num">01</span>
-      <h3 class="problem-title">The Crash</h3>
-      <p class="problem-body">Most energy drinks use synthetic caffeine isolate. It peaks in 45 minutes and falls like a cliff. Not your body failing. The product failing your body.</p>
+
+<!-- ── THE FEATURES ── -->
+
+<!-- ── FEATURES ── -->
+<section class="features-section" id="features">
+  <div class="features-header reveal">
+    <span class="section-tag">What it does for you. Our salient features-</span>
+    <h2 class="features-headline">Built to perform.<br><em>Designed to last.</em></h2>
+    <p class="features-sub">Every feature is a direct result of the formula. Nothing is marketing language. Everything is biological fact.</p>
+  </div>
+
+  <div class="features-grid">
+
+    <div class="feature-card reveal" onclick="expandFeature(this)">
+      <div class="feature-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="12" stroke="rgba(200,168,64,0.5)" stroke-width="0.8"/>
+          <path d="M14 6 L14 14 L19 17" stroke="#C8A840" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="14" cy="14" r="1.5" fill="#C8A840"/>
+        </svg>
+      </div>
+      <span class="feature-num">01</span>
+      <h3 class="feature-title">Sustained Energy</h3>
+      <p class="feature-short">5–6 hours of clean, steady energy. No spike. No cliff.</p>
+      <div class="feature-expand">
+        <p class="feature-long">Natural caffeine from cold-extracted green coffee absorbs 30–40% more slowly than synthetic isolate. Combined with L-Theanine, it produces "alert calm" — the state where you are fully switched on without the anxiety.</p>
+        <div class="feature-stat-row">
+          <div class="feature-stat"><span class="fs-num">80mg</span><span class="fs-label">Natural caffeine</span></div>
+          <div class="feature-stat"><span class="fs-num">5–6h</span><span class="fs-label">Sustained duration</span></div>
+          <div class="feature-stat"><span class="fs-num">0</span><span class="fs-label">Synthetic stimulants</span></div>
+        </div>
+      </div>
+      <span class="feature-cta">Learn more +</span>
     </div>
-    <div class="problem-card">
-      <span class="problem-num">02</span>
-      <h3 class="problem-title">The Jitter</h3>
-      <p class="problem-body">High-dose synthetic stimulants trigger the same adrenaline response as physical threat. Shaking hands. Scattered focus. The opposite of precision performance.</p>
+
+    <div class="feature-card reveal" onclick="expandFeature(this)">
+      <div class="feature-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M8 20 C8 14 14 8 14 8 C14 8 20 14 20 20" stroke="rgba(200,168,64,0.5)" stroke-width="0.8" fill="none"/>
+          <path d="M11 20 C11 16 14 12 14 12 C14 12 17 16 17 20" stroke="#C8A840" stroke-width="1.2" fill="none"/>
+          <line x1="14" y1="20" x2="14" y2="22" stroke="#C8A840" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="feature-num">02</span>
+      <h3 class="feature-title">Zero Sugar</h3>
+      <p class="feature-short">All the energy. None of the sugar crash. None of the guilt.</p>
+      <div class="feature-expand">
+        <p class="feature-long">Sweetened with sucralose — zero calories from sugar, zero glycaemic impact. ÉCLAT VITAL eliminates that sugar crash which you feel entirely. 12 total calories per can.</p>
+        <div class="feature-stat-row">
+          <div class="feature-stat"><span class="fs-num">0g</span><span class="fs-label">Added sugar</span></div>
+          <div class="feature-stat"><span class="fs-num">12</span><span class="fs-label">Total calories</span></div>
+          <div class="feature-stat"><span class="fs-num">0</span><span class="fs-label">Artificial colours</span></div>
+        </div>
+      </div>
+      <span class="feature-cta">Learn more +</span>
     </div>
-    <div class="problem-card">
-      <span class="problem-num">03</span>
-      <h3 class="problem-title">The Emptiness</h3>
-      <p class="problem-body">Standard energy drinks give you stimulation and nothing else. No vitamins. No adaptogens. No support for the biological systems that actually sustain you.</p>
+
+    <div class="feature-card reveal" onclick="expandFeature(this)">
+      <div class="feature-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="10" r="4" stroke="rgba(200,168,64,0.5)" stroke-width="0.8"/>
+          <path d="M7 22 C7 18 10 16 14 16 C18 16 21 18 21 22" stroke="#C8A840" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <path d="M18 8 L20 10 L18 12" stroke="#C8A840" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="feature-num">03</span>
+      <h3 class="feature-title">Stress Resilience</h3>
+      <p class="feature-short">Cortisol modulation so pressure becomes something you use — not something that uses you.</p>
+      <div class="feature-expand">
+        <p class="feature-long">Ashwagandha KSM-66® at 300mg — directly modulates serum cortisol levels. This is the ingredient that makes ÉCLAT VITAL different.</p>
+        <div class="feature-stat-row">
+          <div class="feature-stat"><span class="fs-num">300mg</span><span class="fs-label">Ashwagandha KSM-66®</span></div>
+          <div class="feature-stat"><span class="fs-num">RCT</span><span class="fs-label">Clinically studied</span></div>
+          <div class="feature-stat"><span class="fs-num">↓</span><span class="fs-label">Serum cortisol</span></div>
+        </div>
+      </div>
+      <span class="feature-cta">Learn more +</span>
     </div>
-    <div class="problem-card">
-      <span class="problem-num">04</span>
-      <h3 class="problem-title">The Dishonesty</h3>
-      <p class="problem-body">The market has spent decades telling you that performance looks like aggression. Real performance — the kind that lasts, that creates, that endures — looks like clarity.</p>
+
+    <div class="feature-card reveal" onclick="expandFeature(this)">
+      <div class="feature-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <ellipse cx="14" cy="13" rx="7" ry="5" stroke="rgba(200,168,64,0.5)" stroke-width="0.8"/>
+          <ellipse cx="14" cy="13" rx="3" ry="2" stroke="#C8A840" stroke-width="1.2"/>
+          <line x1="14" y1="8" x2="14" y2="5" stroke="#C8A840" stroke-width="1" stroke-linecap="round"/>
+          <line x1="14" y1="18" x2="14" y2="21" stroke="#C8A840" stroke-width="1" stroke-linecap="round"/>
+          <line x1="7" y1="13" x2="4" y2="13" stroke="#C8A840" stroke-width="1" stroke-linecap="round"/>
+          <line x1="21" y1="13" x2="24" y2="13" stroke="#C8A840" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="feature-num">04</span>
+      <h3 class="feature-title">Sharp Focus</h3>
+      <p class="feature-short">Alpha brain wave activity. The state of relaxed, precise concentration.</p>
+      <div class="feature-expand">
+        <p class="feature-long">L-Theanine at 100mg works with caffeine to promote alpha brain wave activity — the neurological state associated with creative flow, precise decision-making, and sustained attention.</p>
+        <div class="feature-stat-row">
+          <div class="feature-stat"><span class="fs-num">100mg</span><span class="fs-label">L-Theanine</span></div>
+          <div class="feature-stat"><span class="fs-num">α</span><span class="fs-label">Brain wave state</span></div>
+          <div class="feature-stat"><span class="fs-num">+</span><span class="fs-label">Alert calm</span></div>
+        </div>
+      </div>
+      <span class="feature-cta">Learn more +</span>
     </div>
+
+    <div class="feature-card reveal" onclick="expandFeature(this)">
+      <div class="feature-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M9 22 C9 16 11 12 14 10 C17 12 19 16 19 22" stroke="rgba(200,168,64,0.5)" stroke-width="0.8" fill="none"/>
+          <path d="M11 22 C11 18 12.5 15 14 13 C15.5 15 17 18 17 22" stroke="#C8A840" stroke-width="1.2" fill="none"/>
+          <path d="M10 8 C10 6 12 5 14 5 C16 5 18 6 18 8 C18 10 16 11 14 11 C12 11 10 10 10 8Z" stroke="rgba(200,168,64,0.4)" stroke-width="0.7" fill="none"/>
+        </svg>
+      </div>
+      <span class="feature-num">05</span>
+      <h3 class="feature-title">Hair & Skin Health</h3>
+      <p class="feature-short">Biotin B7 at 150% daily value.</p>
+      <div class="feature-expand">
+        <p class="feature-long">Biotin supports keratin synthesis — the structural protein of hair, skin, and nails. At 150% of the daily value, ÉCLAT VITAL gives the body a surplus — enough for maintenance and active cellular repair.</p>
+        <div class="feature-stat-row">
+          <div class="feature-stat"><span class="fs-num">150%</span><span class="fs-label">Biotin daily value</span></div>
+          <div class="feature-stat"><span class="fs-num">B7</span><span class="fs-label">Keratin support</span></div>
+          <div class="feature-stat"><span class="fs-num">✓</span><span class="fs-label">Water soluble · Safe</span></div>
+        </div>
+      </div>
+      <span class="feature-cta">Learn more +</span>
+    </div>
+
+    <div class="feature-card reveal" onclick="expandFeature(this)">
+      <div class="feature-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="6" y="10" width="16" height="12" rx="3" stroke="rgba(200,168,64,0.5)" stroke-width="0.8"/>
+          <rect x="9" y="13" width="10" height="6" rx="1.5" stroke="#C8A840" stroke-width="1.2"/>
+          <line x1="14" y1="7" x2="14" y2="10" stroke="#C8A840" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="10" y1="8" x2="10" y2="10" stroke="rgba(200,168,64,0.4)" stroke-width="0.8" stroke-linecap="round"/>
+          <line x1="18" y1="8" x2="18" y2="10" stroke="rgba(200,168,64,0.4)" stroke-width="0.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="feature-num">06</span>
+      <h3 class="feature-title">Sleep Safe</h3>
+      <p class="feature-short">Performs during the day. Clears your system by evening. Does not wreck your sleep.</p>
+      <div class="feature-expand">
+        <p class="feature-long">At 80mg with a 5–6 hour half-life, a can consumed before 4pm clears your system by 10pm. ÉCLAT VITAL is calibrated specifically to perform during working hours without borrowing from recovery.</p>
+        <div class="feature-stat-row">
+          <div class="feature-stat"><span class="fs-num">5–6h</span><span class="fs-label">Half-life</span></div>
+          <div class="feature-stat"><span class="fs-num">10pm</span><span class="fs-label">Cleared by</span></div>
+          <div class="feature-stat"><span class="fs-num">Mg</span><span class="fs-label">Sleep support</span></div>
+        </div>
+      </div>
+      <span class="feature-cta">Learn more +</span>
+    </div>
+
   </div>
 </section>
 
@@ -1341,135 +1647,85 @@ footer::before {
       <a href="#reserve" class="flavour-cta">Reserve Soleil Rose →</a>
     </div>
   </div>
+  <div style="text-align:center;padding:60px 0 0;">
+      <button onclick="toggleFormula()" id="formula-btn" style="
+        font-family:'Barlow',sans-serif;
+        font-size:11px;
+        letter-spacing:.24em;
+        text-transform:uppercase;
+        color:var(--black);
+        background:var(--gold);
+        border:none;
+        padding:16px 48px;
+        cursor:pointer;
+        transition:background .3s, letter-spacing .3s;
+      " onmouseover="this.style.background='var(--gold-hi)';this.style.letterSpacing='.3em'"
+         onmouseout="this.style.background='var(--gold)';this.style.letterSpacing='.24em'">
+        View our formula →
+      </button>
+      <p style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:14px;">
+        Eight ingredients · Every dose disclosed
+      </p>
+    </div>
 </section>
 
 <div class="gold-rule"></div>
 
 <!-- ── FORMULA ── -->
-<section class="formula-section" id="formula">
+
+<!-- ── FORMULA — hidden, revealed on button click ── -->
+<section class="formula-section" id="formula" style="display:none;">
   <div class="formula-head reveal">
     <h2 class="formula-title">The Formula</h2>
     <span class="formula-subtitle">Eight ingredients. Zero compromise.</span>
   </div>
   <div class="formula-claim reveal">NEW PROFESSIONNEL POWER: VITALIZE &amp; PREP · Every ingredient disclosed · Every dose justified</div>
   <div class="formula-grid">
-    <div class="formula-item reveal"><span class="formula-num">01</span><h3 class="formula-name">Natural Caffeine</h3><span class="formula-dose">80mg · Green Coffee Bean</span><p class="formula-body">Smooth onset focus in 20–40 minutes. No jitter. No crash. Sustained for 5–6 hours. Cold extraction preserves chlorogenic acids that slow absorption — behaves nothing like synthetic caffeine.</p></div>
-    <div class="formula-item reveal"><span class="formula-num">02</span><h3 class="formula-name">Biotin Complex B7</h3><span class="formula-dose">7.5mcg · 150% Daily Value</span><p class="formula-body">Keratin synthesis support — the structural protein of hair, skin, and nails. Sustained stress depletes biotin faster than a standard diet replaces it. Non-negotiable for this brand.</p></div>
-    <div class="formula-item reveal"><span class="formula-num">03</span><h3 class="formula-name">Ashwagandha KSM-66®</h3><span class="formula-dose">300mg · Withanolide ≥5%</span><p class="formula-body">Cortisol modulation. Stress adaptation. The world's most clinically studied ashwagandha extract. Modulates your hormonal response so stress becomes information you can use.</p></div>
-    <div class="formula-item reveal"><span class="formula-num">04</span><h3 class="formula-name">L-Theanine</h3><span class="formula-dose">100mg · Green Tea Leaf</span><p class="formula-body">Promotes alpha brain wave activity — the state of relaxed, sustained concentration. Pairs with caffeine for "alert calm." The most studied cognitive performance stack in nutritional science.</p></div>
-    <div class="formula-item reveal"><span class="formula-num">05</span><h3 class="formula-name">Vitamin B12</h3><span class="formula-dose">2.4mcg · 100% Daily Value</span><p class="formula-body">Neural energy metabolism. Nerve health. Brain function. Deficiency produces fatigue, brain fog, and reduced cognitive performance — the exact symptoms ÉCLAT VITAL is built to address.</p></div>
-    <div class="formula-item reveal"><span class="formula-num">06</span><h3 class="formula-name">Vitamin B6</h3><span class="formula-dose">1.7mg · 100% Daily Value</span><p class="formula-body">Cognitive function support. Energy release from food. Works synergistically with B12 in the neural energy pathway — the biological infrastructure of sustained focus.</p></div>
-    <div class="formula-item reveal"><span class="formula-num">07</span><h3 class="formula-name">Pantothenic Acid B5</h3><span class="formula-dose">5mg · 100% Daily Value</span><p class="formula-body">Converts food into usable energy. Supports adrenal function — directly relevant to sustained performance pressure. Works alongside ashwagandha at a different biological layer.</p></div>
-    <div class="formula-item reveal"><span class="formula-num">08</span><h3 class="formula-name">Magnesium Citrate</h3><span class="formula-dose">56mg · 15% Daily Value</span><p class="formula-body">Highest bioavailability form. Muscle and nerve function. Cortisol regulation. Studies show 60–70% of adults are chronically deficient — manifesting as anxiety, poor sleep, and fatigue.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">01</span><h3 class="formula-name">Natural Caffeine</h3><span class="formula-dose">80mg · Green Coffee Bean</span><p class="formula-body">Smooth onset focus in 20–40 minutes. No jitter. No crash. Sustained for 5–6 hours.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">02</span><h3 class="formula-name">Biotin Complex B7</h3><span class="formula-dose">7.5mcg · 150% Daily Value</span><p class="formula-body">Keratin synthesis support — the structural protein of hair, skin, and nails. Non-negotiable for this brand.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">03</span><h3 class="formula-name">Ashwagandha KSM-66®</h3><span class="formula-dose">300mg · Withanolide ≥5%</span><p class="formula-body">Cortisol modulation. Stress adaptation. The world's most clinically studied ashwagandha extract.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">04</span><h3 class="formula-name">L-Theanine</h3><span class="formula-dose">100mg · Green Tea Leaf</span><p class="formula-body">Promotes alpha brain wave activity. Pairs with caffeine for "alert calm." The most studied cognitive stack.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">05</span><h3 class="formula-name">Vitamin B12</h3><span class="formula-dose">2.4mcg · 100% Daily Value</span><p class="formula-body">Neural energy metabolism. Nerve health. Brain function. Deficiency produces fatigue and brain fog.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">06</span><h3 class="formula-name">Vitamin B6</h3><span class="formula-dose">1.7mg · 100% Daily Value</span><p class="formula-body">Cognitive function support. Works synergistically with B12 in the neural energy pathway.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">07</span><h3 class="formula-name">Pantothenic Acid B5</h3><span class="formula-dose">5mg · 100% Daily Value</span><p class="formula-body">Converts food into usable energy. Supports adrenal function under sustained performance pressure.</p></div>
+    <div class="formula-item reveal"><span class="formula-num">08</span><h3 class="formula-name">Magnesium Citrate</h3><span class="formula-dose">56mg · 15% Daily Value</span><p class="formula-body">Highest bioavailability form. Muscle ease, cortisol regulation, sleep quality improvement.</p></div>
   </div>
+  <div style="text-align:center;padding:48px 0 0;">
+    <button onclick="toggleFormula()" id="formula-close-btn" style="
+      font-family:'Barlow',sans-serif;
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--muted);
+      background:transparent;
+      border:.5px solid rgba(200,168,64,0.2);
+      padding:12px 28px;
+      cursor:pointer;
+      transition:all .3s;
+    " onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(200,168,64,0.5)'"
+       onmouseout="this.style.color='var(--muted)';this.style.borderColor='rgba(200,168,64,0.2)'">
+      Close formula ↑
+    </button>
+  
 </section>
 
 <div class="gold-rule"></div>
 
 <!-- ── NUTRITION TABLE ── -->
-<section class="nutrition-section reveal">
-  <span class="section-tag">Complete nutritional transparency</span>
-  <h2 class="nutrition-headline">Nothing hidden. Everything justified.</h2>
-  <p class="nutrition-sub">No proprietary blends. No hidden dosages. Every active compound disclosed, dosed at clinically studied levels, and sourced with full traceability.</p>
-  <div class="nutrition-inner">
-    <div class="nutrition-table-wrap">
-      <div class="nt-header"><h3>Nutrition Facts — Per 330ml Can</h3></div>
-      <div class="nt-row bold"><span class="nt-label">Calories</span><span class="nt-val">12 kcal</span></div>
-      <div class="nt-row"><span class="nt-label">Total Carbohydrates</span><span class="nt-val">3g</span></div>
-      <div class="nt-row"><span class="nt-label">&nbsp;&nbsp;of which Sugars</span><span class="nt-val">0g ✓</span></div>
-      <div class="nt-row"><span class="nt-label">&nbsp;&nbsp;of which Added Sugars</span><span class="nt-val">0g ✓</span></div>
-      <div class="nt-row"><span class="nt-label">Protein</span><span class="nt-val">0g</span></div>
-      <div class="nt-row"><span class="nt-label">Total Fat</span><span class="nt-val">0g</span></div>
-      <div class="nt-row"><span class="nt-label">Sodium</span><span class="nt-val">80mg</span></div>
-      <div class="nt-active-header"><span>Active Complex</span></div>
-      <div class="nt-row"><span class="nt-label">Natural Caffeine (Green Coffee)</span><span class="nt-val">80mg</span></div>
-      <div class="nt-row"><span class="nt-label">Biotin B7</span><span class="nt-val">7.5mcg · 150% DV</span></div>
-      <div class="nt-row"><span class="nt-label">Ashwagandha KSM-66®</span><span class="nt-val">300mg</span></div>
-      <div class="nt-row"><span class="nt-label">L-Theanine</span><span class="nt-val">100mg</span></div>
-      <div class="nt-row"><span class="nt-label">Vitamin B12</span><span class="nt-val">2.4mcg · 100% DV</span></div>
-      <div class="nt-row"><span class="nt-label">Vitamin B6</span><span class="nt-val">1.7mg · 100% DV</span></div>
-      <div class="nt-row"><span class="nt-label">Pantothenic Acid B5</span><span class="nt-val">5mg · 100% DV</span></div>
-      <div class="nt-row"><span class="nt-label">Magnesium Citrate</span><span class="nt-val">56mg · 15% DV</span></div>
-    </div>
-    <div class="not-in-it">
-      <h3 class="not-title">What is NOT in it.</h3>
-      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No added sugar</span></div>
-      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No synthetic caffeine</span></div>
-      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No artificial colours</span></div>
-      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No artificial flavours</span></div>
-      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No high-dose niacin (B3)</span></div>
-      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No taurine</span></div>
-      <div class="not-item"><div class="not-x"><span>✗</span></div><span class="not-label">No proprietary blend hiding</span></div>
-    </div>
-  </div>
-</section>
+
 
 <div class="gold-rule"></div>
 
 <!-- ── WHO IT'S FOR ── -->
-<section class="for-whom">
-  <span class="section-tag">Chapter 05 — Not a demographic. A moment.</span>
-  <h2 class="fw-headline reveal">Any day where ordinary is not enough.</h2>
-  <p class="fw-sub reveal">Any person. Any pressure. Any moment that demands more than you have left on your own.</p>
-  <div class="fw-grid">
-    <div class="fw-card reveal"><span class="fw-role">The Professional</span><h3 class="fw-title">Certified stylists & salon professionals</h3><p class="fw-moment">"Ten hours behind the chair. Full Saturday booking. Precision on demand."</p><p class="fw-need">Sustained focus. Biotin for chemical exposure. Cortisol support for creative performance on command.</p></div>
-    <div class="fw-card reveal"><span class="fw-role">The Student</span><h3 class="fw-title">16+ working on themselves every day</h3><p class="fw-moment">"Exam season. Five papers. Four days. The temptation to overcaffeinate."</p><p class="fw-need">Calm focus without anxiety. Clean caffeine that does not wreck sleep. Zero sugar crash mid-paper.</p></div>
-    <div class="fw-card reveal"><span class="fw-role">The Founder</span><h3 class="fw-title">Entrepreneurs & builders</h3><p class="fw-moment">"Launch week. Three time zones. Decisions that cannot be reversed."</p><p class="fw-need">6–8 hours of sustained cognitive performance. No mid-afternoon collapse that makes the last third of the day useless.</p></div>
-    <div class="fw-card reveal"><span class="fw-role">The Creative</span><h3 class="fw-title">Designers, photographers, artists</h3><p class="fw-moment">"Shoot day. Client pitch. Deadline that cannot move."</p><p class="fw-need">The biological conditions for flow — calm, sustained alertness, low cortisol. Not caffeine overload.</p></div>
-    <div class="fw-card reveal"><span class="fw-role">The Athlete</span><h3 class="fw-title">Gym-goers & sport enthusiasts</h3><p class="fw-moment">"Morning training followed by a full workday. The body that needs to perform twice."</p><p class="fw-need">Natural caffeine for activation. Biotin for structural support. Magnesium for recovery.</p></div>
-    <div class="fw-card reveal"><span class="fw-role">Everyone</span><h3 class="fw-title">Anyone having a hard week</h3><p class="fw-moment">"The to-do list that doesn't shorten. Where being tired is not an option but is happening anyway."</p><p class="fw-need">A drink that treats the body as an intelligent system deserving proper support — not a machine to overclock.</p></div>
-  </div>
-</section>
 
-<div class="gold-rule"></div>
 
 <!-- ── MANIFESTO ── -->
-<section class="manifesto">
-  <div class="manifesto-bg-text">ÉCLAT</div>
-  <span class="section-tag">What we believe</span>
-  <h2 class="manifesto-headline reveal">Eight beliefs that built this.</h2>
-  <div class="manifesto-grid">
-    <div class="manifesto-item reveal"><span class="manifesto-num">01</span><p class="manifesto-text">Your body is not an obstacle to your ambition.<br><em>It is the vehicle for it.</em></p></div>
-    <div class="manifesto-item reveal"><span class="manifesto-num">02</span><p class="manifesto-text">Real energy is quiet, steady,<br><em>and still there at hour nine.</em></p></div>
-    <div class="manifesto-item reveal"><span class="manifesto-num">03</span><p class="manifesto-text">The most caring thing you can do for someone is understand their biology deeply enough <em>to actually help it.</em></p></div>
-    <div class="manifesto-item reveal"><span class="manifesto-num">04</span><p class="manifesto-text">A crash is not an inevitability.<br><em>It is a design flaw. We designed around it.</em></p></div>
-    <div class="manifesto-item reveal"><span class="manifesto-num">05</span><p class="manifesto-text">Transparency is not a feature.<br><em>Every ingredient disclosed. Every dosage justified.</em></p></div>
-    <div class="manifesto-item reveal"><span class="manifesto-num">06</span><p class="manifesto-text">Beauty and performance are the same thing —<br><em>the expression of a body that is genuinely well.</em></p></div>
-    <div class="manifesto-item reveal"><span class="manifesto-num">07</span><p class="manifesto-text">Thinking is an athletic event.<br><em>We formulate accordingly.</em></p></div>
-    <div class="manifesto-item reveal"><span class="manifesto-num">08</span><p class="manifesto-text">You are worth the science.<br><em>You always were.</em></p></div>
-  </div>
-</section>
+
 
 <div class="gold-rule"></div>
 
 <!-- ── COMPARISON ── -->
-<section class="comparison reveal">
-  <span class="section-tag">Why ÉCLAT VITAL</span>
-  <h2 class="comparison-headline">"The difference is not marketing. It is the formula."</h2>
-  <table class="comparison-table">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Red Bull</th>
-        <th>Monster</th>
-        <th>ÉCLAT VITAL ✓</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Sugar</td><td>27g</td><td>54g</td><td>0g ✓</td></tr>
-      <tr><td>Synthetic caffeine</td><td>Yes</td><td>Yes</td><td>No ✓</td></tr>
-      <tr><td>Caffeine dose</td><td>80mg</td><td>160mg</td><td>80mg ✓</td></tr>
-      <tr><td>Natural caffeine source</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
-      <tr><td>Artificial colours</td><td>Yes</td><td>Yes</td><td>No ✓</td></tr>
-      <tr><td>Adaptogens</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
-      <tr><td>Biotin</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
-      <tr><td>Full B-vitamin complex</td><td>Partial</td><td>Partial</td><td>Full ✓</td></tr>
-      <tr><td>Magnesium</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
-      <tr><td>Calories</td><td>110 kcal</td><td>210 kcal</td><td>12 kcal ✓</td></tr>
-      <tr><td>L'Oréal Research</td><td>No</td><td>No</td><td>Yes ✓</td></tr>
-    </tbody>
-  </table>
-</section>
+
 
 <div class="gold-rule"></div>
 
@@ -1725,6 +1981,43 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+// ── FORMULA TOGGLE ──
+function toggleFormula() {
+  const formula = document.getElementById('formula');
+  const btn = document.getElementById('formula-btn');
+  const isHidden = formula.style.display === 'none';
+
+  if (isHidden) {
+    formula.style.display = 'block';
+    formula.style.opacity = '0';
+    formula.style.transform = 'translateY(20px)';
+    formula.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    setTimeout(() => {
+      formula.style.opacity = '1';
+      formula.style.transform = 'translateY(0)';
+    }, 10);
+    setTimeout(() => {
+      formula.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    if (btn) btn.style.display = 'none';
+
+    // Re-trigger reveal animations on newly visible items
+    document.querySelectorAll('#formula .reveal').forEach(el => {
+      el.classList.remove('visible');
+      setTimeout(() => obs.observe(el), 200);
+    });
+  } else {
+    formula.style.opacity = '0';
+    formula.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      formula.style.display = 'none';
+      formula.style.opacity = '';
+      formula.style.transform = '';
+    }, 600);
+    if (btn) btn.style.display = 'inline-block';
+    document.getElementById('flavours').scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+}
 document.querySelectorAll('.faq-question').forEach(q => {
   q.addEventListener('click', () => {
     const item = q.parentElement;
@@ -1737,7 +2030,18 @@ document.querySelectorAll('.faq-question').forEach(q => {
   });
 });
 // ── FAQ ACCORDION (Existing logic) ──
-
+// ── FEATURES EXPAND ──
+function expandFeature(card) {
+  const isActive = card.classList.contains('active');
+  document.querySelectorAll('.feature-card').forEach(c => {
+    c.classList.remove('active');
+    c.querySelector('.feature-cta').textContent = 'Learn more +';
+  });
+  if (!isActive) {
+    card.classList.add('active');
+    card.querySelector('.feature-cta').textContent = 'Close −';
+  }
+}
 </script>
 </body>
 </html>
